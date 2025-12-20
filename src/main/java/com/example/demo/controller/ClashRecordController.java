@@ -2,44 +2,32 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ClashRecord;
 import com.example.demo.service.ClashRecordService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clashes")
-@Tag(name = "Clash Records")
+@RequestMapping("/clashes")
 public class ClashRecordController {
 
-    private final ClashRecordService service;
+    private final ClashRecordService clashRecordService;
 
-    public ClashRecordController(ClashRecordService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ClashRecord log(@RequestBody ClashRecord clash) {
-        return service.logClash(clash);
-    }
-
-    @PutMapping("/{id}/resolve")
-    public ClashRecord resolve(@PathVariable Long id) {
-        return service.resolveClash(id);
-    }
-
-    @GetMapping("/event/{eventId}")
-    public List<ClashRecord> byEvent(@PathVariable Long eventId) {
-        return service.getClashesForEvent(eventId);
-    }
-
-    @GetMapping("/unresolved")
-    public List<ClashRecord> unresolved() {
-        return service.getUnresolvedClashes();
+    public ClashRecordController(ClashRecordService clashRecordService) {
+        this.clashRecordService = clashRecordService;
     }
 
     @GetMapping
-    public List<ClashRecord> all() {
-        return service.getAllClashes();
+    public List<ClashRecord> getAll() {
+        return clashRecordService.getAll();
+    }
+
+    @PostMapping
+    public ClashRecord save(@RequestBody ClashRecord clash) {
+        return clashRecordService.save(clash);
+    }
+
+    @PutMapping("/{id}/resolve")
+    public void resolve(@PathVariable Long id) {
+        clashRecordService.resolve(id);
     }
 }
