@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class ClashRecord {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long eventAId;
@@ -15,11 +15,14 @@ public class ClashRecord {
     private String clashType;
     private String severity;
     private String details;
-    private boolean resolved = false;
+    private Boolean resolved = false;
     private LocalDateTime detectedAt;
 
     @PrePersist
-    public void prePersist() {
+    public void onCreate() {
         detectedAt = LocalDateTime.now();
     }
+
+    public Boolean getResolved() { return resolved; }
+    public void setResolved(Boolean resolved) { this.resolved = resolved; }
 }
