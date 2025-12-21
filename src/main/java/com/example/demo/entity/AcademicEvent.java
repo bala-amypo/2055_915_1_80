@@ -2,12 +2,11 @@ package com.example.demo.entity;
 
 import com.example.demo.exception.ValidationException;
 import jakarta.persistence.*;
-import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 public class AcademicEvent {
 
     @Id
@@ -25,9 +24,75 @@ public class AcademicEvent {
 
     @PrePersist
     void onCreate() {
-        if (startDate.isAfter(endDate)) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
             throw new ValidationException("Start date must be before end date");
         }
         submittedAt = LocalDateTime.now();
+    }
+
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getSubmittedAt() {
+        return submittedAt;
     }
 }
