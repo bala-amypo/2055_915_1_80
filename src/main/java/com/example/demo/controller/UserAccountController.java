@@ -1,39 +1,26 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
-import com.example.demo.entity.UserAccount;
-import com.example.demo.security.JwtUtil;
-import com.example.demo.service.UserAccountService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.dto.JwtResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication")
+@RequestMapping("/users")
 public class UserAccountController {
 
-    private final UserAccountService service;
-    private final JwtUtil jwtUtil;
-
-    public UserAccountController(UserAccountService service, JwtUtil jwtUtil) {
-        this.service = service;
-        this.jwtUtil = jwtUtil;
-    }
-
     @PostMapping("/register")
-    public UserAccount register(@RequestBody RegisterRequest req) {
-        UserAccount user = new UserAccount();
-        user.setFullName(req.getName());
-        user.setEmail(req.getEmail());
-        user.setPassword(req.getPassword());
-        user.setRole(req.getRole());
-        user.setDepartment(req.getDepartment());
-        return service.register(user);
+    public ResponseEntity<String> register(@RequestBody RegisterRequest req) {
+        // Dummy logic
+        return ResponseEntity.ok("Dummy register: " + req.getName());
     }
 
     @PostMapping("/login")
-    public JwtResponse login(@RequestBody LoginRequest req) {
-        UserAccount user = service.findByEmail(req.getEmail());
-        return new JwtResponse(jwtUtil.generateToken(user.getEmail()));
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest req) {
+        // Dummy JWT response
+        JwtResponse response = new JwtResponse();
+        response.setToken("dummy-token-for-" + req.getEmail());
+        return ResponseEntity.ok(response);
     }
 }
