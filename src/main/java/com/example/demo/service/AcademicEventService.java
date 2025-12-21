@@ -5,15 +5,7 @@ import java.util.List;
 
 public interface AcademicEventService {
 
-    AcademicEvent createEvent(AcademicEvent event);
-
-    AcademicEvent updateEvent(Long id, AcademicEvent event);
-
-    AcademicEvent getEventById(Long id);
-
-    void deleteEvent(Long id);
+    AcademicEvent saveEvent(AcademicEvent event);
 
     List<AcademicEvent> getAllEvents();
-
-    List<AcademicEvent> getEventsByBranch(Long branchId);
 }

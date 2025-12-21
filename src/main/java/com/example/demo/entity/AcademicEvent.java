@@ -4,30 +4,60 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "academic_events")
 public class AcademicEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // make sure this exists
+    private String branchName;
+    private String eventName;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Long branchId; // make sure this exists
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public AcademicEvent() {}
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public AcademicEvent(String branchName, String eventName, LocalDate startDate, LocalDate endDate) {
+        this.branchName = branchName;
+        this.eventName = eventName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public String getBranchName() {
+        return branchName;
+    }
 
-    public Long getBranchId() { return branchId; }
-    public void setBranchId(Long branchId) { this.branchId = branchId; }
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
