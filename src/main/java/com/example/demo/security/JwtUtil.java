@@ -1,27 +1,34 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import java.security.Key;
+
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private Key key;
+    private final String SECRET_KEY = "secret";
 
-    @PostConstruct
-    public void initKey() {
-        key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    public String extractUsername(String token) {
+        return getClaims(token).getSubject();
     }
 
-    public String generateToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .signWith(key)
-                .compact();
+    public boolean validateToken(String token, UserDetails userDetails) {
+        return extractUsername(token).equals(userDetails.getUsername())
+                && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return getClaims(token).getExpiration().before(new Date());
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
