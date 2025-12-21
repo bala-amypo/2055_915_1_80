@@ -6,11 +6,23 @@ import com.example.demo.service.BranchProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BranchProfileServiceImpl implements BranchProfileService {
 
     @Autowired
     private BranchProfileRepository repository;
+
+    @Override
+    public BranchProfile createBranch(BranchProfile branch) {
+        return repository.save(branch);
+    }
+
+    @Override
+    public List<BranchProfile> getAllBranches() {
+        return repository.findAll();
+    }
 
     @Override
     public BranchProfile updateBranchStatus(Long branchId, boolean active) {
