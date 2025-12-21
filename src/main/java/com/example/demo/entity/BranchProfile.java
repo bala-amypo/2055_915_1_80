@@ -1,11 +1,10 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "branchCode"))
 public class BranchProfile {
 
@@ -22,5 +21,46 @@ public class BranchProfile {
     @PrePersist
     void onCreate() {
         lastSyncAt = LocalDateTime.now();
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public LocalDateTime getLastSyncAt() {
+        return lastSyncAt;
     }
 }
