@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AcademicEventServiceImpl implements AcademicEventService {
@@ -17,8 +16,18 @@ public class AcademicEventServiceImpl implements AcademicEventService {
 
     @Override
     public AcademicEvent saveEvent(AcademicEvent event) {
-        // If using auto-generated ID, no need to manually set it
         return eventRepository.save(event);
+    }
+
+    @Override
+    public AcademicEvent getEventById(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+    }
+
+    @Override
+    public void deleteEvent(Long id) {
+        eventRepository.deleteById(id);
     }
 
     @Override
@@ -27,12 +36,8 @@ public class AcademicEventServiceImpl implements AcademicEventService {
     }
 
     @Override
-    public Optional<AcademicEvent> getEventById(Long id) {
-        return eventRepository.findById(id);
-    }
-
-    @Override
-    public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+    public List<AcademicEvent> getEventsByBranch(Long branchId) {
+        // Implement based on your schema, e.g., if you have branchId in AcademicEvent:
+        return eventRepository.findByBranchId(branchId);
     }
 }

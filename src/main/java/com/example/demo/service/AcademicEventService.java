@@ -5,14 +5,13 @@ import com.example.demo.entity.AcademicEvent;
 import java.util.List;
 
 public interface AcademicEventService {
+    AcademicEvent saveEvent(AcademicEvent event);
 
-    AcademicEvent createEvent(AcademicEvent event);
+    AcademicEvent getEventById(Long id);   // Return type: AcademicEvent
 
-    AcademicEvent updateEvent(Long id, AcademicEvent event);
-
-    AcademicEvent getEventById(Long id);
-
-    List<AcademicEvent> getEventsByBranch(Long branchId);
+    void deleteEvent(Long id);
 
     List<AcademicEvent> getAllEvents();
+
+    List<AcademicEvent> getEventsByBranch(Long branchId);  // must exist
 }
