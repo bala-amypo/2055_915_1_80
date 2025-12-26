@@ -14,7 +14,7 @@ public class JwtUtil {
 
     @PostConstruct
     public void initKey() {
-        this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public SecretKey getSecretKey() {
