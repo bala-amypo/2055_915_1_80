@@ -51,4 +51,24 @@ public class UserAccountServiceImpl implements UserAccountService {
     public List<UserAccount> getAllUsers() {
         return userAccountRepository.findAll();
     }
+
+    @Override
+    public UserAccount createUser(UserAccount user) {
+        return register(user);
+    }
+
+    @Override
+    public UserAccount getUserById(Long id) {
+        return getUser(id);
+    }
+
+    @Override
+    public UserAccount createUser(UserAccount user) {
+        return register(user);
+    }
+
+    @Override
+    public UserAccount getUserById(Long id) {
+        return getUser(id);
+    }
 }

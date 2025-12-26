@@ -43,4 +43,14 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     public List<HarmonizedCalendar> getCalendarsWithinRange(LocalDate start, LocalDate end) {
         return harmonizedCalendarRepository.findByEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(start, end);
     }
+
+    @Override
+    public HarmonizedCalendar createCalendar(HarmonizedCalendar calendar) {
+        return harmonizedCalendarRepository.save(calendar);
+    }
+
+    @Override
+    public HarmonizedCalendar createCalendar(HarmonizedCalendar calendar) {
+        return harmonizedCalendarRepository.save(calendar);
+    }
 }
