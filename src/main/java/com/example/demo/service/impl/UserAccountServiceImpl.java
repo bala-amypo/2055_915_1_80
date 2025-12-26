@@ -2,22 +2,26 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.UserAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAccountServiceImpl {
+public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repository;
+    @Autowired
+    private UserAccountRepository repository;
 
-    public UserAccountServiceImpl(UserAccountRepository repository) {
-        this.repository = repository;
+    public UserAccountServiceImpl() {
     }
 
-    public UserAccount register(UserAccount user) {
+    @Override
+    public UserAccount save(UserAccount user) {
         return repository.save(user);
     }
 
-    public UserAccount getUser(long id) {
-        return repository.findById(id).orElse(null);
+    @Override
+    public UserAccount findByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
     }
 }

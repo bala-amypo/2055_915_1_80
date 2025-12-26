@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,7 +8,7 @@ import java.time.LocalDateTime;
 public class BranchProfile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String branchCode;
@@ -18,11 +17,13 @@ public class BranchProfile {
     private Boolean active;
     private LocalDateTime lastSyncAt;
 
-    @PrePersist
-    void onCreate() {
-        lastSyncAt = LocalDateTime.now();
+    public BranchProfile() {
     }
 
+    @PrePersist
+    public void onCreate() {
+        this.lastSyncAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
