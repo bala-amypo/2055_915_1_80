@@ -1,30 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ClashRecord;
-import com.example.demo.service.ClashRecordService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.demo.entity.ClashRecord;
+import com.example.demo.service.ClashRecordService;
 
 @RestController
 @RequestMapping("/clashes")
 public class ClashRecordController {
 
-    private final ClashRecordService service;
-
-    public ClashRecordController(ClashRecordService service) {
-        this.service = service;
-    }
+    @Autowired
+    private ClashRecordService service;
 
     @PostMapping
-    public ResponseEntity<ClashRecord> create(@RequestBody ClashRecord clash) {
-        return new ResponseEntity<>(service.createClash(clash), HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ClashRecord>> getAll() {
-        return ResponseEntity.ok(service.getAllClashes());
+    public ClashRecord createClash(@RequestBody ClashRecord record) {
+        return service.createClash(record);
     }
 }
