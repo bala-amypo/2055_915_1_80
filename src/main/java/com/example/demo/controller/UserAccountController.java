@@ -2,16 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserAccountController {
-
     private final UserAccountService service;
 
     public UserAccountController(UserAccountService service) {
@@ -19,17 +17,17 @@ public class UserAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<UserAccount> create(@RequestBody UserAccount user) {
-        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
+    public ResponseEntity<UserAccount> createUser(@RequestBody UserAccount user) {
+        return ResponseEntity.ok(service.createUser(user));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserAccount>> getAll() {
+    public ResponseEntity<List<UserAccount>> getAllUsers() {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccount> getById(@PathVariable Long id) {
+    public ResponseEntity<UserAccount> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getUserById(id));
     }
 }
