@@ -1,22 +1,19 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.ClashRecord;
-import com.example.demo.service.ClashRecordService;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.AcademicEvent;
+import com.example.demo.entity.ClashRecord;
+import com.example.demo.service.ClashDetectionService;
+
 @Service
-public class ClashRecordServiceImpl implements ClashRecordService {
+public class ClashDetectionServiceImpl implements ClashDetectionService {
 
     @Override
-    public ClashRecord createClash(ClashRecord record) {
-        return record;
-    }
-
-    @Override
-    public List<ClashRecord> getAllClashes() {
+    public List<ClashRecord> detectClashes(List<AcademicEvent> events) {
         return new ArrayList<>();
     }
 }
