@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.BranchProfile;
+import com.example.demo.entity.AcademicEvent;
 import java.util.List;
 
-public interface BranchProfileService {
-    BranchProfile createBranch(BranchProfile branch);
-    BranchProfile updateBranchStatus(Long id, boolean active);
-    List<BranchProfile> getAllBranches();
-    BranchProfile getBranchById(Long id);
-    BranchProfile findByBranchCode(String branchCode);
+public interface AcademicEventService {
+    AcademicEvent createEvent(AcademicEvent event);
+    List<AcademicEvent> getEventsByBranch(Long branchId);
+    AcademicEvent updateEvent(Long id, AcademicEvent event);
+    AcademicEvent getEventById(Long id);
+    List<AcademicEvent> getAllEvents();
 }
