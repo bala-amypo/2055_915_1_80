@@ -17,7 +17,8 @@ public class UserAccount {
     private String email;
     private LocalDateTime createdAt;
 
-    public UserAccount() {}
+    public UserAccount() {
+    }
 
     public UserAccount(Long id, String username, String password, String role,
                        String branchName, String email, LocalDateTime createdAt) {
@@ -30,8 +31,8 @@ public class UserAccount {
         this.createdAt = createdAt;
     }
 
-    public void setId(Long id) { this.id = id; }
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getUsername() { return username; }
     public String getPassword() { return password; }

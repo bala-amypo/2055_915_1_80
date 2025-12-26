@@ -8,7 +8,8 @@ public class RegisterRequest {
     private String branchName;
     private String email;
 
-    public RegisterRequest() {}
+    public RegisterRequest() {
+    }
 
     public RegisterRequest(String username, String password, String role,
                            String branchName, String email) {

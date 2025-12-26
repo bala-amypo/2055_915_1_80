@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserAccountServiceImpl {
 
-    private final UserAccountRepository repo;
+    private final UserAccountRepository repository;
 
-    public UserAccountServiceImpl(UserAccountRepository repo) {
-        this.repo = repo;
+    public UserAccountServiceImpl(UserAccountRepository repository) {
+        this.repository = repository;
     }
 
     public UserAccount register(UserAccount user) {
-        return repo.save(user);
+        return repository.save(user);
     }
 
     public UserAccount getUser(long id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 }
