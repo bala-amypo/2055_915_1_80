@@ -4,6 +4,6 @@ import com.example.demo.entity.ClashRecord;
 import java.util.List;
 
 public interface ClashRecordService {
-    ClashRecord saveClash(ClashRecord record);
+    ClashRecord createClash(ClashRecord record);
     List<ClashRecord> getAllClashes();
 }
