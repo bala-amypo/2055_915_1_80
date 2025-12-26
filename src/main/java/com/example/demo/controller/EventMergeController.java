@@ -2,15 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.EventMergeRecord;
 import com.example.demo.service.EventMergeService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/merge-records")
-@Tag(name = "Event Merge Records")
+@RequestMapping("/event-merges")
 public class EventMergeController {
 
     private final EventMergeService service;
@@ -20,24 +19,12 @@ public class EventMergeController {
     }
 
     @PostMapping
-    public EventMergeRecord merge(@RequestParam List<Long> eventIds,
-                                  @RequestParam String reason) {
-        return service.mergeEvents(eventIds, reason);
-    }
-
-    @GetMapping("/{id}")
-    public EventMergeRecord getById(@PathVariable Long id) {
-        return service.getMergeRecordById(id);
+    public ResponseEntity<EventMergeRecord> create(@RequestBody EventMergeRecord record) {
+        return new ResponseEntity<>(service.mergeEvent(record), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<EventMergeRecord> getAll() {
-        return service.getAllMergeRecords();
-    }
-
-    @GetMapping("/range")
-    public List<EventMergeRecord> getByRange(@RequestParam LocalDate start,
-                                             @RequestParam LocalDate end) {
-        return service.getMergeRecordsByDate(start, end);
+    public ResponseEntity<List<EventMergeRecord>> getAll() {
+        return ResponseEntity.ok(service.getAllMergedEvents());
     }
 }

@@ -2,15 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.HarmonizedCalendar;
 import com.example.demo.service.HarmonizedCalendarService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/harmonized-calendars")
-@Tag(name = "Harmonized Calendars")
+@RequestMapping("/harmonized-calendars")
 public class HarmonizedCalendarController {
 
     private final HarmonizedCalendarService service;
@@ -19,25 +18,13 @@ public class HarmonizedCalendarController {
         this.service = service;
     }
 
-    @PostMapping("/generate")
-    public HarmonizedCalendar generate(@RequestParam String title,
-                                       @RequestParam String generatedBy) {
-        return service.generateHarmonizedCalendar(title, generatedBy);
-    }
-
-    @GetMapping("/{id}")
-    public HarmonizedCalendar getById(@PathVariable Long id) {
-        return service.getCalendarById(id);
+    @PostMapping
+    public ResponseEntity<HarmonizedCalendar> create(@RequestBody HarmonizedCalendar calendar) {
+        return new ResponseEntity<>(service.createCalendar(calendar), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<HarmonizedCalendar> getAll() {
-        return service.getAllCalendars();
-    }
-
-    @GetMapping("/range")
-    public List<HarmonizedCalendar> getByRange(@RequestParam LocalDate start,
-                                               @RequestParam LocalDate end) {
-        return service.getCalendarsWithinRange(start, end);
+    public ResponseEntity<List<HarmonizedCalendar>> getAll() {
+        return ResponseEntity.ok(service.getAllCalendars());
     }
 }

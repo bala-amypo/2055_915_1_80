@@ -1,26 +1,35 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
-import com.example.demo.dto.JwtResponse;
+import com.example.demo.entity.UserAccount;
+import com.example.demo.service.UserAccountService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserAccountController {
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest req) {
-        // Dummy logic
-        return ResponseEntity.ok("Dummy register: " + req.getName());
+    private final UserAccountService service;
+
+    public UserAccountController(UserAccountService service) {
+        this.service = service;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest req) {
-        // Dummy JWT response
-        JwtResponse response = new JwtResponse();
-        response.setToken("dummy-token-for-" + req.getEmail());
-        return ResponseEntity.ok(response);
+    @PostMapping
+    public ResponseEntity<UserAccount> create(@RequestBody UserAccount user) {
+        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserAccount>> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserAccount> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getUserById(id));
     }
 }
