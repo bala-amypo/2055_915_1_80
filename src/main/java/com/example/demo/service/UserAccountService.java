@@ -4,8 +4,7 @@ import com.example.demo.entity.UserAccount;
 import java.util.List;
 
 public interface UserAccountService {
-    UserAccount register(UserAccount user);
-    UserAccount getUser(Long id);
+    UserAccount createUser(UserAccount user);
+    UserAccount getUserById(Long id);
     List<UserAccount> getAllUsers();
-    UserAccount findByEmail(String email);
 }
