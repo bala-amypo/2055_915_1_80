@@ -1,15 +1,24 @@
-package com.example.demo;
+spring.application.name=demo
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+# Server Configuration
+server.port=8081
 
-@SpringBootApplication
-@ServletComponentScan
-public class DemoApplication {
+# Database Configuration (H2 for development)
+spring.datasource.url=jdbc:h2:mem:devdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+# H2 Console (for development)
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
 
-}
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+
+# Security Configuration
+spring.security.user.name=admin
+spring.security.user.password=admin
+spring.security.user.roles=ADMIN
