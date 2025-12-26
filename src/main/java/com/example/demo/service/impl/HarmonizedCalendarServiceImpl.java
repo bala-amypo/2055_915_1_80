@@ -48,9 +48,4 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     public HarmonizedCalendar createCalendar(HarmonizedCalendar calendar) {
         return harmonizedCalendarRepository.save(calendar);
     }
-
-    @Override
-    public HarmonizedCalendar createCalendar(HarmonizedCalendar calendar) {
-        return harmonizedCalendarRepository.save(calendar);
-    }
 }

@@ -61,14 +61,4 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccount getUserById(Long id) {
         return getUser(id);
     }
-
-    @Override
-    public UserAccount createUser(UserAccount user) {
-        return register(user);
-    }
-
-    @Override
-    public UserAccount getUserById(Long id) {
-        return getUser(id);
-    }
 }
