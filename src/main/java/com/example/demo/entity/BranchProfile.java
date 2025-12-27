@@ -1,31 +1,44 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class BranchProfile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String branchCode;
     private String branchName;
-    private String contactEmail;
-    private boolean active = true;
-    private LocalDateTime lastSyncAt;
+    private boolean active;
 
-    @PrePersist
-    public void prePersist() {
-        this.lastSyncAt = LocalDateTime.now();
-        this.active = true;
+    // ✅ REQUIRED getters & setters
+    public Long getId() {
+        return id;
     }
 
-    public boolean getActive() { return active; }
-    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
+    public String getBranchCode() {
+        return branchCode;
+    }
 
-    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
-    public void setBranchName(String branchName) { this.branchName = branchName; }
-    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
 }

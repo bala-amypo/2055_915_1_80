@@ -4,6 +4,14 @@ import com.example.demo.entity.AcademicEvent;
 import java.util.List;
 
 public interface AcademicEventService {
-    AcademicEvent createEvent(AcademicEvent event);
-    List<AcademicEvent> getEventsByBranch(long branchId);
+
+    AcademicEvent create(AcademicEvent event);
+
+    AcademicEvent update(Long id, AcademicEvent event);
+
+    List<AcademicEvent> getByBranch(Long branchId);
+
+    AcademicEvent getById(Long id);
+
+    List<AcademicEvent> getAll();
 }
