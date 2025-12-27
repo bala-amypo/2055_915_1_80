@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.UserAccount;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.ValidationException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
@@ -10,26 +10,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repository;
+    private final UserAccountRepository repo;
 
-    public UserAccountServiceImpl(UserAccountRepository repository) {
-        this.repository = repository;
+    public UserAccountServiceImpl(UserAccountRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public UserAccount register(String email, String password, String role) {
-        if (repository.existsByEmail(email)) {
+        return register(new UserAccount(email, password, role));
+    }
+
+    @Override
+    public UserAccount register(UserAccount user) {
+        if (repo.existsByEmail(user.getEmail())) {
             throw new ValidationException("Email already exists");
         }
-        if (password == null || password.length() < 6) {
+        if (user.getPassword() == null || user.getPassword().length() < 6) {
             throw new ValidationException("Password too short");
         }
-        return repository.save(new UserAccount(email, password, role));
+        return repo.save(user);
     }
 
     @Override
     public UserAccount findByEmail(String email) {
-        return repository.findByEmail(email)
+        return repo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
