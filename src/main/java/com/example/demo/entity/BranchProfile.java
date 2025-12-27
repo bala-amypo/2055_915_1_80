@@ -4,53 +4,28 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "branch_profiles")
 public class BranchProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String branchCode;
     private String branchName;
-    private String location;
-    private boolean active;
+    private String contactEmail;
+    private boolean active = true;
+    private LocalDateTime lastSyncAt;
 
-    @OneToOne
-    private UserAccount user;
-
-    private LocalDateTime createdAt;
-
-    public BranchProfile() {
-        this.createdAt = LocalDateTime.now();
-    }
-
-    public BranchProfile(String branchCode, String branchName, UserAccount user) {
-        this.branchCode = branchCode;
-        this.branchName = branchName;
-        this.user = user;
-        this.createdAt = LocalDateTime.now();
+    @PrePersist
+    public void prePersist() {
+        this.lastSyncAt = LocalDateTime.now();
         this.active = true;
     }
 
-    // 🔴 REQUIRED BY TESTS
-    public BranchProfile(Long id, String branchCode, String branchName,
-                         String location, LocalDateTime createdAt, boolean active) {
-        this.id = id;
-        this.branchCode = branchCode;
-        this.branchName = branchName;
-        this.location = location;
-        this.createdAt = createdAt;
-        this.active = active;
-    }
+    public boolean getActive() { return active; }
+    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getBranchCode() { return branchCode; }
-    public String getBranchName() { return branchName; }
-    public String getLocation() { return location; }
-    public boolean isActive() { return active; }
-
-    public void setActive(boolean active) { this.active = active; }
+    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
+    public void setBranchName(String branchName) { this.branchName = branchName; }
+    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
 }
