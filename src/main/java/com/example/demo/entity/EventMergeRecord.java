@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
+@Table(name = "event_merge_records")
 public class EventMergeRecord {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String sourceEventIds;
@@ -19,15 +20,9 @@ public class EventMergeRecord {
 
     public EventMergeRecord() {}
 
-    public EventMergeRecord(
-            long id,
-            String sourceEventIds,
-            String mergedTitle,
-            LocalDate mergedStartDate,
-            LocalDate mergedEndDate,
-            String mergeReason,
-            LocalDateTime createdAt) {
-
+    public EventMergeRecord(Long id, String sourceEventIds, String mergedTitle,
+                            LocalDate mergedStartDate, LocalDate mergedEndDate,
+                            String mergeReason, LocalDateTime createdAt) {
         this.id = id;
         this.sourceEventIds = sourceEventIds;
         this.mergedTitle = mergedTitle;
@@ -37,7 +32,28 @@ public class EventMergeRecord {
         this.createdAt = createdAt;
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getSourceEventIds() { return sourceEventIds; }
     public void setSourceEventIds(String sourceEventIds) { this.sourceEventIds = sourceEventIds; }
+
+    public String getMergedTitle() { return mergedTitle; }
+    public void setMergedTitle(String mergedTitle) { this.mergedTitle = mergedTitle; }
+
+    public LocalDate getMergedStartDate() { return mergedStartDate; }
+    public void setMergedStartDate(LocalDate mergedStartDate) { this.mergedStartDate = mergedStartDate; }
+
+    public LocalDate getMergedEndDate() { return mergedEndDate; }
+    public void setMergedEndDate(LocalDate mergedEndDate) { this.mergedEndDate = mergedEndDate; }
+
+    public String getMergeReason() { return mergeReason; }
+    public void setMergeReason(String mergeReason) { this.mergeReason = mergeReason; }
+
     public LocalDateTime getCreatedAt() { return createdAt; }
 }
