@@ -11,8 +11,18 @@ import com.example.demo.service.UserAccountService;
 public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
+    public UserAccount register(UserAccount user) {
+        return user;
+    }
+
+    @Override
     public String login(String username, String password) {
         return "dummy-jwt-token";
+    }
+
+    @Override
+    public UserAccount findByEmail(String email) {
+        return null;
     }
 
     @Override

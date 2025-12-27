@@ -5,7 +5,11 @@ import com.example.demo.entity.UserAccount;
 
 public interface UserAccountService {
 
+    UserAccount register(UserAccount user);
+
     String login(String username, String password);
+
+    UserAccount findByEmail(String email);
 
     List<UserAccount> getAll();
 
