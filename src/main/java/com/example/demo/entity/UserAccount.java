@@ -4,67 +4,66 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_accounts")
 public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
+    private String username;
     private String password;
     private String role;
-    private Boolean active;
-    private String firstName;
-    private String lastName;
+    private String email;
+    private String branchCode;
     private LocalDateTime createdAt;
 
     public UserAccount() {
     }
 
-    public UserAccount(String email, String password, String role) {
-        this.email = email;
+    public UserAccount(String username, String password, String role) {
+        this.username = username;
         this.password = password;
         this.role = role;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public UserAccount(Long id,
-                       String email,
-                       String password,
-                       String role,
-                       String firstName,
-                       String lastName,
-                       LocalDateTime createdAt) {
+    public UserAccount(Long id, String username, String password,
+                       String role, String email,
+                       String branchCode, LocalDateTime createdAt) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.email = email;
+        this.branchCode = branchCode;
         this.createdAt = createdAt;
-        this.active = true;
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (active == null) active = true;
-        if (createdAt == null) createdAt = LocalDateTime.now();
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
