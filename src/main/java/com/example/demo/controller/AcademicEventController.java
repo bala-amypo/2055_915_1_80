@@ -2,13 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.AcademicEvent;
 import com.example.demo.service.AcademicEventService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
+@Tag(name = "Academic Events")
 public class AcademicEventController {
 
     private final AcademicEventService service;
@@ -18,15 +19,27 @@ public class AcademicEventController {
     }
 
     @PostMapping
-    public AcademicEvent create(@RequestParam Long branchId,
-                                @RequestParam String title,
-                                @RequestParam LocalDate startDate,
-                                @RequestParam LocalDate endDate) {
-        return service.createEvent(branchId, title, startDate, endDate);
+    public AcademicEvent create(@RequestBody AcademicEvent event) {
+        return service.create(event);
+    }
+
+    @PutMapping("/{id}")
+    public AcademicEvent update(@PathVariable Long id, @RequestBody AcademicEvent event) {
+        return service.update(id, event);
     }
 
     @GetMapping("/branch/{branchId}")
-    public List<AcademicEvent> byBranch(@PathVariable Long branchId) {
-        return service.getEventsByBranch(branchId);
+    public List<AcademicEvent> getByBranch(@PathVariable Long branchId) {
+        return service.getByBranch(branchId);
+    }
+
+    @GetMapping("/{id}")
+    public AcademicEvent getById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
+    @GetMapping
+    public List<AcademicEvent> getAll() {
+        return service.getAll();
     }
 }

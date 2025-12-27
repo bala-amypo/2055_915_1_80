@@ -1,23 +1,45 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ClashRecord;
-import com.example.demo.repository.ClashRecordRepository;
+import com.example.demo.service.ClashDetectionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/clashes")
+@Tag(name = "Clash Records")
 public class ClashRecordController {
 
-    private final ClashRecordRepository repository;
+    private final ClashDetectionService service;
 
-    public ClashRecordController(ClashRecordRepository repository) {
-        this.repository = repository;
+    public ClashRecordController(ClashDetectionService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ClashRecord log(@RequestBody ClashRecord clash) {
+        return service.log(clash);
+    }
+
+    @PutMapping("/{id}/resolve")
+    public ClashRecord resolve(@PathVariable Long id) {
+        return service.resolve(id);
+    }
+
+    @GetMapping("/event/{eventId}")
+    public List<ClashRecord> getByEvent(@PathVariable Long eventId) {
+        return service.getByEvent(eventId);
+    }
+
+    @GetMapping("/unresolved")
+    public List<ClashRecord> getUnresolved() {
+        return service.getUnresolved();
     }
 
     @GetMapping
-    public List<ClashRecord> all() {
-        return repository.findAll();
+    public List<ClashRecord> getAll() {
+        return service.getAll();
     }
 }
