@@ -1,52 +1,60 @@
 package com.example.demo.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.demo.entity.UserAccount;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.ValidationException;
+import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.UserAccountService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.UserAccount;
-import com.example.demo.service.UserAccountService;
+import java.util.List;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final List<UserAccount> store = new ArrayList<>();
+    private final UserAccountRepository userAccountRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserAccount register(UserAccount user) {
-        store.add(user);
-        return user;
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository,
+                                  PasswordEncoder passwordEncoder) {
+        this.userAccountRepository = userAccountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public String login(String username, String password) {
-        return "dummy-jwt-token";
+    public UserAccount register(UserAccount user) {
+
+        if (userAccountRepository.existsByEmail(user.getEmail())) {
+            throw new ValidationException("Email already in use");
+        }
+
+        if (user.getPassword() == null || user.getPassword().length() < 8) {
+            throw new ValidationException("Password must be at least 8 characters");
+        }
+
+        if (user.getRole() == null) {
+            user.setRole("REVIEWER");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userAccountRepository.save(user);
     }
 
     @Override
     public UserAccount findByEmail(String email) {
-        return store.stream()
-                .filter(u -> email != null && email.equals(u.getEmail()))
-                .findFirst()
-                .orElse(null);
+        return userAccountRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     @Override
-    public List<UserAccount> getAll() {
-        return store;
+    public UserAccount getUser(Long id) {
+        return userAccountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     @Override
-    public UserAccount getById(Long id) {
-        return getUser(id);
-    }
-
-    // 🔴 REQUIRED BY TESTS
-    public UserAccount getUser(long id) {
-        return store.stream()
-                .filter(u -> u.getId() != null && u.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public List<UserAccount> getAllUsers() {
+        return userAccountRepository.findAll();
     }
 }
