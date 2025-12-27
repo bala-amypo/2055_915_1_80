@@ -3,6 +3,7 @@ package com.example.demo.security;
 import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,9 +13,14 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
+
     private SecretKey key;
     private final long expirationMillis = 86400000; // 24 hours
 
+    /**
+     * ✅ Ensure key is always initialized
+     */
+    @PostConstruct
     public void initKey() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
@@ -37,6 +43,9 @@ public class JwtUtil {
         return generateToken(claims, user.getEmail());
     }
 
+    /**
+     * ✅ Returns shadowed Claims (with getPayload())
+     */
     public Claims parseToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -50,12 +59,14 @@ public class JwtUtil {
     }
 
     public String extractRole(String token) {
-        return (String) parseToken(token).get("role");
+        return (String) parseToken(token).getPayload().get("role");
     }
 
     public Long extractUserId(String token) {
-        Object userId = parseToken(token).get("userId");
-        return userId instanceof Integer ? ((Integer) userId).longValue() : (Long) userId;
+        Object userId = parseToken(token).getPayload().get("userId");
+        return userId instanceof Integer
+                ? ((Integer) userId).longValue()
+                : (Long) userId;
     }
 
     public boolean isTokenValid(String token, String username) {
