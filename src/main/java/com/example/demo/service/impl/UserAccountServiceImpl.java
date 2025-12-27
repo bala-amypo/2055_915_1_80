@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,8 +11,11 @@ import com.example.demo.service.UserAccountService;
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
+    private final List<UserAccount> store = new ArrayList<>();
+
     @Override
     public UserAccount register(UserAccount user) {
+        store.add(user);
         return user;
     }
 
@@ -22,16 +26,27 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccount findByEmail(String email) {
-        return null;
+        return store.stream()
+                .filter(u -> email.equals(u.getEmail()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public List<UserAccount> getAll() {
-        return List.of();
+        return store;
     }
 
     @Override
     public UserAccount getById(Long id) {
-        return null;
+        return getUser(id);
+    }
+
+    // 🔴 REQUIRED BY TESTS
+    public UserAccount getUser(long id) {
+        return store.stream()
+                .filter(u -> u.getId() != null && u.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 }
