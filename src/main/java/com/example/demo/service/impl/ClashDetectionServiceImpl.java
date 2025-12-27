@@ -1,37 +1,27 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.ClashRecord;
 import com.example.demo.service.ClashDetectionService;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class ClashDetectionServiceImpl implements ClashDetectionService {
 
     @Override
-    public ClashRecord log(ClashRecord clash) {
-        return clash;
-    }
-
-    @Override
-    public ClashRecord resolve(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<ClashRecord> getByEvent(Long eventId) {
+    public List<ClashRecord> getClashesForEvent(long eventId) {
         return List.of();
     }
 
     @Override
-    public List<ClashRecord> getUnresolved() {
+    public List<ClashRecord> getUnresolvedClashes() {
         return List.of();
     }
 
     @Override
-    public List<ClashRecord> getAll() {
-        return List.of();
+    public ClashRecord resolveClash(long clashId) {
+        ClashRecord cr = new ClashRecord();
+        cr.setResolved(true);
+        return cr;
     }
 }
