@@ -2,47 +2,42 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.HarmonizedCalendar;
 import com.example.demo.service.HarmonizedCalendarService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/harmonized-calendars")
-@Tag(name = "Harmonized Calendars")
 public class HarmonizedCalendarController {
 
-    private final HarmonizedCalendarService service;
+    private final HarmonizedCalendarService harmonizedCalendarService;
 
-    public HarmonizedCalendarController(HarmonizedCalendarService service) {
-        this.service = service;
+    public HarmonizedCalendarController(HarmonizedCalendarService harmonizedCalendarService) {
+        this.harmonizedCalendarService = harmonizedCalendarService;
     }
 
-    // ✅ POST /generate → returns SINGLE object
     @PostMapping("/generate")
-    public HarmonizedCalendar generate() {
-        return service.generate();
+    public HarmonizedCalendar generate(@RequestBody Map<String, String> body) {
+        return harmonizedCalendarService.generateHarmonizedCalendar(
+                body.get("title"),
+                body.get("generatedBy")
+        );
     }
 
-    // ✅ GET /{id}
     @GetMapping("/{id}")
     public HarmonizedCalendar getById(@PathVariable Long id) {
-        return service.getById(id);
+        return harmonizedCalendarService.getCalendarById(id);
     }
 
-    // ✅ GET /
     @GetMapping
-    public List<HarmonizedCalendar> getAll() {
-        return service.getAll();
+    public Object getAll() {
+        return harmonizedCalendarService.getAllCalendars();
     }
 
-    // ✅ GET /range
     @GetMapping("/range")
-    public List<HarmonizedCalendar> getByRange(
-            @RequestParam LocalDate start,
-            @RequestParam LocalDate end
-    ) {
-        return service.getByRange(start, end);
+    public Object getByRange(@RequestParam LocalDate start,
+                             @RequestParam LocalDate end) {
+        return harmonizedCalendarService.getCalendarsWithinRange(start, end);
     }
 }
