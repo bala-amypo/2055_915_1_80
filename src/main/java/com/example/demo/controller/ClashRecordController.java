@@ -1,39 +1,23 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ClashRecord;
-import com.example.demo.service.ClashRecordService;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.repository.ClashRecordRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clash-records")
+@RequestMapping("/api/clashes")
 public class ClashRecordController {
-    private final ClashRecordService clashRecordService;
 
-    public ClashRecordController(ClashRecordService clashRecordService) {
-        this.clashRecordService = clashRecordService;
-    }
+    private final ClashRecordRepository repository;
 
-    @PostMapping
-    public ResponseEntity<ClashRecord> createClashRecord(@RequestBody ClashRecord clashRecord) {
-        return ResponseEntity.ok(clashRecordService.createClashRecord(clashRecord));
+    public ClashRecordController(ClashRecordRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping
-    public ResponseEntity<List<ClashRecord>> getAllClashRecords() {
-        return ResponseEntity.ok(clashRecordService.getAllClashRecords());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ClashRecord> getClashRecordById(@PathVariable Long id) {
-        return ResponseEntity.ok(clashRecordService.getClashRecordById(id));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClashRecord(@PathVariable Long id) {
-        clashRecordService.deleteClashRecord(id);
-        return ResponseEntity.noContent().build();
+    public List<ClashRecord> all() {
+        return repository.findAll();
     }
 }
