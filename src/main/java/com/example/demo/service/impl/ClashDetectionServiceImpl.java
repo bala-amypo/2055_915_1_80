@@ -1,38 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.AcademicEvent;
-import com.example.demo.entity.ClashRecord;
-import com.example.demo.repository.AcademicEventRepository;
-import com.example.demo.repository.ClashRecordRepository;
-import com.example.demo.service.ClashDetectionService;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.demo.entity.ClashRecord;
+import com.example.demo.service.ClashDetectionService;
 
 @Service
 public class ClashDetectionServiceImpl implements ClashDetectionService {
 
-    private final AcademicEventRepository eventRepo;
-    private final ClashRecordRepository clashRepo;
-
-    public ClashDetectionServiceImpl(AcademicEventRepository eventRepo,
-                                     ClashRecordRepository clashRepo) {
-        this.eventRepo = eventRepo;
-        this.clashRepo = clashRepo;
+    @Override
+    public ClashRecord log(ClashRecord clash) {
+        return clash;
     }
 
     @Override
-    public void detectClashes() {
-        List<AcademicEvent> events = eventRepo.findAll();
-        for (int i = 0; i < events.size(); i++) {
-            for (int j = i + 1; j < events.size(); j++) {
-                AcademicEvent a = events.get(i);
-                AcademicEvent b = events.get(j);
-                if (!a.getEndDate().isBefore(b.getStartDate())
-                        && !b.getEndDate().isBefore(a.getStartDate())) {
-                    clashRepo.save(new ClashRecord(a, b, "HIGH"));
-                }
-            }
-        }
+    public ClashRecord resolve(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<ClashRecord> getByEvent(Long eventId) {
+        return List.of();
+    }
+
+    @Override
+    public List<ClashRecord> getUnresolved() {
+        return List.of();
+    }
+
+    @Override
+    public List<ClashRecord> getAll() {
+        return List.of();
     }
 }
