@@ -27,7 +27,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccount findByEmail(String email) {
         return store.stream()
-                .filter(u -> email.equals(u.getEmail()))
+                .filter(u -> email != null && email.equals(u.getEmail()))
                 .findFirst()
                 .orElse(null);
     }
