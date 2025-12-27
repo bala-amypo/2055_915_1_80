@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface ClashDetectionService {
 
-    ClashRecord log(ClashRecord record);
+    ClashRecord logClash(ClashRecord clash);
 
-    ClashRecord resolve(Long id);
+    List<ClashRecord> getClashesForEvent(Long eventId);
 
-    List<ClashRecord> getByEvent(Long eventId);
+    ClashRecord resolveClash(Long clashId);
 
-    List<ClashRecord> getUnresolved();
+    List<ClashRecord> getUnresolvedClashes();
 
-    List<ClashRecord> getAll();
+    List<ClashRecord> getAllClashes();
 }

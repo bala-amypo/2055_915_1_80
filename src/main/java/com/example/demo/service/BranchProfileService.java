@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.entity.BranchProfile;
+import java.util.List;
 
 public interface BranchProfileService {
 
-    BranchProfile create(BranchProfile branch);
+    BranchProfile createBranch(BranchProfile branch);
 
-    BranchProfile updateStatus(Long id, boolean active);
+    BranchProfile updateBranchStatus(Long id, boolean active);
 
-    BranchProfile getById(Long id);
+    List<BranchProfile> getAllBranches();
 
-    List<BranchProfile> getAll();
+    BranchProfile getBranchById(Long id);
 
-    BranchProfile getByCode(String branchCode);
+    BranchProfile findByBranchCode(String branchCode);
 }

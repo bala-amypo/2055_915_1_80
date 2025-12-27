@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface EventMergeService {
 
-    EventMergeRecord merge(List<Long> eventIds);
+    EventMergeRecord mergeEvents(List<Long> eventIds, String reason);
 
-    EventMergeRecord getById(Long id);
+    List<EventMergeRecord> getAllMergeRecords();
 
-    List<EventMergeRecord> getAll();
+    EventMergeRecord getMergeRecordById(Long id);
 
-    List<EventMergeRecord> getByRange(LocalDate start, LocalDate end);
+    List<EventMergeRecord> getMergeRecordsByDate(LocalDate start, LocalDate end);
 }
