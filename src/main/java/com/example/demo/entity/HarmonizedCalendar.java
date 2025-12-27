@@ -7,46 +7,86 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "harmonized_calendars")
 public class HarmonizedCalendar {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String title;
-    private String generatedBy;
-    private LocalDateTime generatedAt;
-    private LocalDate effectiveFrom;
-    private LocalDate effectiveTo;
-    @Column(columnDefinition = "TEXT")
-    private String eventsJson;
 
-    public HarmonizedCalendar() {}
+    @Column(nullable = false)
+    private LocalDate startDate;
 
-    public HarmonizedCalendar(Long id, String title, String generatedBy, LocalDateTime generatedAt, LocalDate effectiveFrom, LocalDate effectiveTo, String eventsJson) {
-        this.id = id;
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    @Column(nullable = false)
+    private String mergedGroupId;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    public HarmonizedCalendar() {
+    }
+
+    public HarmonizedCalendar(String title, LocalDate startDate, LocalDate endDate, String mergedGroupId) {
         this.title = title;
-        this.generatedBy = generatedBy;
-        this.generatedAt = generatedAt;
-        this.effectiveFrom = effectiveFrom;
-        this.effectiveTo = effectiveTo;
-        this.eventsJson = eventsJson;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.mergedGroupId = mergedGroupId;
     }
 
     @PrePersist
     public void prePersist() {
-        this.generatedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getGeneratedBy() { return generatedBy; }
-    public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
-    public void setGeneratedAt(LocalDateTime generatedAt) { this.generatedAt = generatedAt; }
-    public LocalDate getEffectiveFrom() { return effectiveFrom; }
-    public void setEffectiveFrom(LocalDate effectiveFrom) { this.effectiveFrom = effectiveFrom; }
-    public LocalDate getEffectiveTo() { return effectiveTo; }
-    public void setEffectiveTo(LocalDate effectiveTo) { this.effectiveTo = effectiveTo; }
-    public String getEventsJson() { return eventsJson; }
-    public void setEventsJson(String eventsJson) { this.eventsJson = eventsJson; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getMergedGroupId() {
+        return mergedGroupId;
+    }
+
+    public void setMergedGroupId(String mergedGroupId) {
+        this.mergedGroupId = mergedGroupId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
