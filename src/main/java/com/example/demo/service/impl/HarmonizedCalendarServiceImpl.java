@@ -11,11 +11,11 @@ import java.util.List;
 public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService {
 
     @Override
-    public HarmonizedCalendar generateHarmonizedCalendar(String name, String generatedBy) {
+    public HarmonizedCalendar generate() {
         return new HarmonizedCalendar(
                 1L,
-                name,
-                generatedBy,
+                "Auto Calendar",
+                "SYSTEM",
                 LocalDateTime.now(),
                 LocalDate.now(),
                 LocalDate.now().plusDays(1),
@@ -24,7 +24,17 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     }
 
     @Override
-    public List<HarmonizedCalendar> getCalendarsWithinRange(LocalDate from, LocalDate to) {
+    public HarmonizedCalendar getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<HarmonizedCalendar> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<HarmonizedCalendar> getByRange(LocalDate start, LocalDate end) {
         return List.of();
     }
 }

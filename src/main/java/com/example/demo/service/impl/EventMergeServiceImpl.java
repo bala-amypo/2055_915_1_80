@@ -11,20 +11,30 @@ import java.util.List;
 public class EventMergeServiceImpl implements EventMergeService {
 
     @Override
-    public EventMergeRecord mergeEvents(List<Long> ids, String reason) {
+    public EventMergeRecord merge(List<Long> eventIds) {
         return new EventMergeRecord(
                 1L,
-                ids.toString(),
+                eventIds.toString(),
                 "Merged Event",
                 LocalDate.now(),
                 LocalDate.now(),
-                reason,
+                "AUTO",
                 LocalDateTime.now()
         );
     }
 
     @Override
-    public List<EventMergeRecord> getMergeRecordsByDate(LocalDate start, LocalDate end) {
+    public EventMergeRecord getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<EventMergeRecord> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<EventMergeRecord> getByRange(LocalDate start, LocalDate end) {
         return List.of();
     }
 }

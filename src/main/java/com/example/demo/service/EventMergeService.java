@@ -5,6 +5,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EventMergeService {
-    EventMergeRecord mergeEvents(List<Long> eventIds, String reason);
-    List<EventMergeRecord> getMergeRecordsByDate(LocalDate start, LocalDate end);
+
+    EventMergeRecord merge(List<Long> eventIds);
+
+    EventMergeRecord getById(Long id);
+
+    List<EventMergeRecord> getAll();
+
+    List<EventMergeRecord> getByRange(LocalDate start, LocalDate end);
 }

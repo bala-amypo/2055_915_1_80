@@ -9,12 +9,27 @@ import java.util.List;
 public class AcademicEventServiceImpl implements AcademicEventService {
 
     @Override
-    public AcademicEvent createEvent(AcademicEvent event) {
+    public AcademicEvent create(AcademicEvent event) {
         return event;
     }
 
     @Override
-    public List<AcademicEvent> getEventsByBranch(long branchId) {
+    public AcademicEvent update(Long id, AcademicEvent event) {
+        return event;
+    }
+
+    @Override
+    public List<AcademicEvent> getByBranch(Long branchId) {
+        return List.of();
+    }
+
+    @Override
+    public AcademicEvent getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<AcademicEvent> getAll() {
         return List.of();
     }
 }

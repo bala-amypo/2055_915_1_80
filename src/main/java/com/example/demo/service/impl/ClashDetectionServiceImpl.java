@@ -9,19 +9,29 @@ import java.util.List;
 public class ClashDetectionServiceImpl implements ClashDetectionService {
 
     @Override
-    public List<ClashRecord> getClashesForEvent(long eventId) {
-        return List.of();
+    public ClashRecord log(ClashRecord record) {
+        return record;
     }
 
     @Override
-    public List<ClashRecord> getUnresolvedClashes() {
-        return List.of();
-    }
-
-    @Override
-    public ClashRecord resolveClash(long clashId) {
+    public ClashRecord resolve(Long id) {
         ClashRecord cr = new ClashRecord();
         cr.setResolved(true);
         return cr;
+    }
+
+    @Override
+    public List<ClashRecord> getByEvent(Long eventId) {
+        return List.of();
+    }
+
+    @Override
+    public List<ClashRecord> getUnresolved() {
+        return List.of();
+    }
+
+    @Override
+    public List<ClashRecord> getAll() {
+        return List.of();
     }
 }
