@@ -19,25 +19,25 @@ public class HarmonizedCalendarController {
         this.service = service;
     }
 
-    // ✅ Generate harmonized calendar (RETURNS LIST)
+    // ✅ POST /generate → returns SINGLE object
     @PostMapping("/generate")
-    public List<HarmonizedCalendar> generate() {
+    public HarmonizedCalendar generate() {
         return service.generate();
     }
 
-    // ✅ Get calendar by ID (SINGLE)
+    // ✅ GET /{id}
     @GetMapping("/{id}")
     public HarmonizedCalendar getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
-    // ✅ List all calendars (LIST)
+    // ✅ GET /
     @GetMapping
     public List<HarmonizedCalendar> getAll() {
         return service.getAll();
     }
 
-    // ✅ Get calendars by date range (LIST)
+    // ✅ GET /range
     @GetMapping("/range")
     public List<HarmonizedCalendar> getByRange(
             @RequestParam LocalDate start,
