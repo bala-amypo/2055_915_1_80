@@ -1,51 +1,43 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.AcademicEvent;
 import com.example.demo.entity.HarmonizedCalendar;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.AcademicEventRepository;
 import com.example.demo.repository.HarmonizedCalendarRepository;
 import com.example.demo.service.HarmonizedCalendarService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService {
-    private final HarmonizedCalendarRepository harmonizedCalendarRepository;
 
-    public HarmonizedCalendarServiceImpl(HarmonizedCalendarRepository harmonizedCalendarRepository) {
-        this.harmonizedCalendarRepository = harmonizedCalendarRepository;
+    private final AcademicEventRepository eventRepo;
+    private final HarmonizedCalendarRepository calendarRepo;
+
+    public HarmonizedCalendarServiceImpl(AcademicEventRepository eventRepo,
+                                         HarmonizedCalendarRepository calendarRepo) {
+        this.eventRepo = eventRepo;
+        this.calendarRepo = calendarRepo;
     }
 
     @Override
-    public HarmonizedCalendar generateHarmonizedCalendar(String title, String generatedBy) {
-        HarmonizedCalendar calendar = new HarmonizedCalendar();
-        calendar.setTitle(title);
-        calendar.setGeneratedBy(generatedBy);
-        calendar.setEffectiveFrom(LocalDate.now());
-        calendar.setEffectiveTo(LocalDate.now().plusDays(30));
-        calendar.setEventsJson("[]");
-        return harmonizedCalendarRepository.save(calendar);
-    }
-
-    @Override
-    public HarmonizedCalendar getCalendarById(Long id) {
-        return harmonizedCalendarRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Calendar not found"));
-    }
-
-    @Override
-    public List<HarmonizedCalendar> getAllCalendars() {
-        return harmonizedCalendarRepository.findAll();
-    }
-
-    @Override
-    public List<HarmonizedCalendar> getCalendarsWithinRange(LocalDate start, LocalDate end) {
-        return harmonizedCalendarRepository.findByEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(start, end);
-    }
-
-    @Override
-    public HarmonizedCalendar createCalendar(HarmonizedCalendar calendar) {
-        return harmonizedCalendarRepository.save(calendar);
+    public List<HarmonizedCalendar> generate() {
+        List<AcademicEvent> events = eventRepo.findAll();
+        List<HarmonizedCalendar> result = new ArrayList<>();
+        String groupId = UUID.randomUUID().toString();
+        for (AcademicEvent e : events) {
+            result.add(calendarRepo.save(
+                    new HarmonizedCalendar(
+                            e.getTitle(),
+                            e.getStartDate(),
+                            e.getEndDate(),
+                            groupId
+                    )
+            ));
+        }
+        return result;
     }
 }

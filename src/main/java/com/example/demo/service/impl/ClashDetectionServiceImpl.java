@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.AcademicEvent;
 import com.example.demo.entity.ClashRecord;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.AcademicEventRepository;
 import com.example.demo.repository.ClashRecordRepository;
 import com.example.demo.service.ClashDetectionService;
 import org.springframework.stereotype.Service;
@@ -10,37 +11,28 @@ import java.util.List;
 
 @Service
 public class ClashDetectionServiceImpl implements ClashDetectionService {
-    private final ClashRecordRepository clashRecordRepository;
 
-    public ClashDetectionServiceImpl(ClashRecordRepository clashRecordRepository) {
-        this.clashRecordRepository = clashRecordRepository;
+    private final AcademicEventRepository eventRepo;
+    private final ClashRecordRepository clashRepo;
+
+    public ClashDetectionServiceImpl(AcademicEventRepository eventRepo,
+                                     ClashRecordRepository clashRepo) {
+        this.eventRepo = eventRepo;
+        this.clashRepo = clashRepo;
     }
 
     @Override
-    public ClashRecord logClash(ClashRecord clash) {
-        return clashRecordRepository.save(clash);
-    }
-
-    @Override
-    public List<ClashRecord> getClashesForEvent(Long eventId) {
-        return clashRecordRepository.findByEventAIdOrEventBId(eventId, eventId);
-    }
-
-    @Override
-    public ClashRecord resolveClash(Long clashId) {
-        ClashRecord clash = clashRecordRepository.findById(clashId)
-                .orElseThrow(() -> new ResourceNotFoundException("Clash not found"));
-        clash.setResolved(true);
-        return clashRecordRepository.save(clash);
-    }
-
-    @Override
-    public List<ClashRecord> getUnresolvedClashes() {
-        return clashRecordRepository.findByResolvedFalse();
-    }
-
-    @Override
-    public List<ClashRecord> getAllClashes() {
-        return clashRecordRepository.findAll();
+    public void detectClashes() {
+        List<AcademicEvent> events = eventRepo.findAll();
+        for (int i = 0; i < events.size(); i++) {
+            for (int j = i + 1; j < events.size(); j++) {
+                AcademicEvent a = events.get(i);
+                AcademicEvent b = events.get(j);
+                if (!a.getEndDate().isBefore(b.getStartDate())
+                        && !b.getEndDate().isBefore(a.getStartDate())) {
+                    clashRepo.save(new ClashRecord(a, b, "HIGH"));
+                }
+            }
+        }
     }
 }
