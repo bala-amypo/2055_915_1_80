@@ -1,68 +1,43 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Entity
-@Table(name = "event_merge_records")
 public class EventMergeRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
-    private AcademicEvent event;
+    private String sourceEventIds;
+    private String mergedTitle;
+    private LocalDate mergedStartDate;
+    private LocalDate mergedEndDate;
+    private String mergeReason;
+    private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private String mergedGroupId;
+    public EventMergeRecord() {}
 
-    @Column(nullable = false)
-    private LocalDateTime mergedAt;
+    public EventMergeRecord(
+            long id,
+            String sourceEventIds,
+            String mergedTitle,
+            LocalDate mergedStartDate,
+            LocalDate mergedEndDate,
+            String mergeReason,
+            LocalDateTime createdAt) {
 
-    public EventMergeRecord() {
-    }
-
-    public EventMergeRecord(AcademicEvent event, String mergedGroupId) {
-        this.event = event;
-        this.mergedGroupId = mergedGroupId;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.mergedAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
         this.id = id;
+        this.sourceEventIds = sourceEventIds;
+        this.mergedTitle = mergedTitle;
+        this.mergedStartDate = mergedStartDate;
+        this.mergedEndDate = mergedEndDate;
+        this.mergeReason = mergeReason;
+        this.createdAt = createdAt;
     }
 
-    public AcademicEvent getEvent() {
-        return event;
-    }
-
-    public void setEvent(AcademicEvent event) {
-        this.event = event;
-    }
-
-    public String getMergedGroupId() {
-        return mergedGroupId;
-    }
-
-    public void setMergedGroupId(String mergedGroupId) {
-        this.mergedGroupId = mergedGroupId;
-    }
-
-    public LocalDateTime getMergedAt() {
-        return mergedAt;
-    }
-
-    public void setMergedAt(LocalDateTime mergedAt) {
-        this.mergedAt = mergedAt;
-    }
+    public String getSourceEventIds() { return sourceEventIds; }
+    public void setSourceEventIds(String sourceEventIds) { this.sourceEventIds = sourceEventIds; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

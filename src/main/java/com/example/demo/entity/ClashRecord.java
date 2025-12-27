@@ -4,78 +4,44 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "clash_records")
 public class ClashRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "event_one_id", nullable = false)
-    private AcademicEvent eventOne;
-
-    @ManyToOne
-    @JoinColumn(name = "event_two_id", nullable = false)
-    private AcademicEvent eventTwo;
-
-    @Column(nullable = false)
+    private long eventAId;
+    private long eventBId;
+    private String clashType;
     private String severity;
-
-    @Column(nullable = false)
+    private String description;
     private LocalDateTime detectedAt;
+    private boolean resolved;
 
-    public ClashRecord() {
-    }
+    public ClashRecord() {}
 
-    public ClashRecord(AcademicEvent eventOne, AcademicEvent eventTwo, String severity) {
-        this.eventOne = eventOne;
-        this.eventTwo = eventTwo;
-        this.severity = severity;
-    }
+    public ClashRecord(
+            long id,
+            long eventAId,
+            long eventBId,
+            String clashType,
+            String severity,
+            String description,
+            LocalDateTime detectedAt,
+            boolean resolved) {
 
-    @PrePersist
-    public void prePersist() {
-        this.detectedAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
         this.id = id;
-    }
-
-    public AcademicEvent getEventOne() {
-        return eventOne;
-    }
-
-    public void setEventOne(AcademicEvent eventOne) {
-        this.eventOne = eventOne;
-    }
-
-    public AcademicEvent getEventTwo() {
-        return eventTwo;
-    }
-
-    public void setEventTwo(AcademicEvent eventTwo) {
-        this.eventTwo = eventTwo;
-    }
-
-    public String getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(String severity) {
+        this.eventAId = eventAId;
+        this.eventBId = eventBId;
+        this.clashType = clashType;
         this.severity = severity;
-    }
-
-    public LocalDateTime getDetectedAt() {
-        return detectedAt;
-    }
-
-    public void setDetectedAt(LocalDateTime detectedAt) {
+        this.description = description;
         this.detectedAt = detectedAt;
+        this.resolved = resolved;
     }
+
+    public long getEventAId() { return eventAId; }
+    public long getEventBId() { return eventBId; }
+    public boolean getResolved() { return resolved; }
+    public void setResolved(boolean resolved) { this.resolved = resolved; }
 }

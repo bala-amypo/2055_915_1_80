@@ -1,105 +1,46 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Entity
-@Table(name = "academic_events")
 public class AcademicEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    private Long branchId;
     private String title;
-
-    @Column(nullable = false)
+    private String eventType;
     private LocalDate startDate;
-
-    @Column(nullable = false)
     private LocalDate endDate;
+    private LocalDateTime submittedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "branch_id", nullable = false)
-    private BranchProfile branch;
+    public AcademicEvent() {}
 
-    @Column(nullable = false)
-    private Boolean merged;
+    public AcademicEvent(
+            long id,
+            Long branchId,
+            String title,
+            String eventType,
+            LocalDate startDate,
+            LocalDate endDate,
+            String s1,
+            String s2,
+            LocalDateTime submittedAt) {
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    public AcademicEvent() {
-    }
-
-    public AcademicEvent(String title, LocalDate startDate, LocalDate endDate, BranchProfile branch) {
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.branch = branch;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.merged = false;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
+        this.branchId = branchId;
         this.title = title;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
+        this.eventType = eventType;
         this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+        this.submittedAt = submittedAt;
     }
 
-    public BranchProfile getBranch() {
-        return branch;
-    }
-
-    public void setBranch(BranchProfile branch) {
-        this.branch = branch;
-    }
-
-    public Boolean getMerged() {
-        return merged;
-    }
-
-    public void setMerged(Boolean merged) {
-        this.merged = merged;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    public Long getBranchId() { return branchId; }
+    public void setBranchId(long branchId) { this.branchId = branchId; }
+    public void setEventType(String eventType) { this.eventType = eventType; }
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
 }
